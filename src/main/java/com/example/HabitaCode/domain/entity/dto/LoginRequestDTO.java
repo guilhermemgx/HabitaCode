@@ -1,0 +1,9 @@
+package com.example.HabitaCode.domain.entity.dto;
+
+import lombok.Data;
+
+@Data
+public class LoginRequestDTO {
+    private String username;
+    private String password;
+}
