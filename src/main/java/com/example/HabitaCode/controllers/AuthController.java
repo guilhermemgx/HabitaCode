@@ -17,7 +17,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO login) {
         return usuarioService.autenticar(login.getUsername(), login.getPassword())
-                .map(user -> ResponseEntity.ok("Login realizado com sucesso"))
+                .map(user -> ResponseEntity.ok(user.getId()))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas"));
     }
 

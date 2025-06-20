@@ -11,5 +11,11 @@ public class Constants {
         public static final String CIDADE = "cidade";
         public static final String CONDOMINIO = "condominio";
 
+        public static final String PLANOMANUTENCAO = "planoDeManutencao";
+        public static final String TIPOPLANOMANUTENCAO = "tipoPlanoManutencao";
+        public static final String ITEMPLANOMANUTENCAO = "itemPlanoManutencao";
+
+        public static final String CONDOMINIOITEMPLANOMANUTENCAO = "condominioItemPlanoManutencao";
+
     }
 }
