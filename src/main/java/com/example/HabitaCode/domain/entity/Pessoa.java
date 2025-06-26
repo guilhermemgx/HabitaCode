@@ -14,16 +14,16 @@ import java.util.UUID;
 @Table(name = Constants.HABITACODE.PESSOA, schema = Constants.HABITACODE.SCHEMA)
 public class Pessoa {
     @Id
-    @Column(length = 32)
-    private String id;
+    @Column(name = "pessoaid", length = 32)
+    private String pessoaId;
 
-    @Column(name = "nome_completo", nullable = false)
+    @Column(name = "nomecompleto", nullable = false)
     private String nomeCompleto;
 
     @Column(length = 20)
     private String telefone;
 
-    @Column(name = "data_nascimento")
+    @Column(name = "datanascimento")
     private LocalDate dataNascimento;
 
     @Column(nullable = false, unique = true, length = 14)
@@ -33,13 +33,17 @@ public class Pessoa {
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "condominio_id", nullable = false)
-    private Condominio condominio;
+    @JoinColumn(name = "condominioid", nullable = false)
+    private Condominio condominioId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuarioid", nullable = false)
+    private Usuario usuarioId;
 
     @PrePersist
     public void gerarId() {
-        if (id == null) {
-            id = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "");
+        if (pessoaId == null) {
+            pessoaId = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "");
         }
     }
 }

@@ -16,4 +16,5 @@ public class PessoaRequestDTO {
     private String cidadeId;
     private String condominio;
     private String email;
+    private String userId;
 }

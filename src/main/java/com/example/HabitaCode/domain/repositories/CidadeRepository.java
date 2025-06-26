@@ -16,4 +16,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, String> {
             where ci.estado_id = :estadoId
             """, nativeQuery = true)
     public List<Cidade> findCidade (@Param("estadoId") String estadoId);
+
+
 }

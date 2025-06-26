@@ -12,13 +12,14 @@ public class PessoaDTO {
     private String condominio;
     private String cidade;
     private String estado;
+    private String usuarioId;
 
     public PessoaDTO (String id,
         String nomeCompleto,
         String cpf,
         String condominio,
         String cidade,
-        String estado
+        String estado, String usuarioId
     ){
         this.id = id;
         this.nomeCompleto = nomeCompleto;
@@ -26,5 +27,6 @@ public class PessoaDTO {
         this.condominio = condominio;
         this.cidade = cidade;
         this.estado = estado;
+        this.usuarioId = usuarioId;
     }
 }

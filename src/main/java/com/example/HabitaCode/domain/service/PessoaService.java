@@ -3,11 +3,13 @@ package com.example.HabitaCode.domain.service;
 import com.example.HabitaCode.domain.entity.Cidade;
 import com.example.HabitaCode.domain.entity.Condominio;
 import com.example.HabitaCode.domain.entity.Pessoa;
+import com.example.HabitaCode.domain.entity.Usuario;
 import com.example.HabitaCode.domain.entity.dto.PessoaDTO;
 import com.example.HabitaCode.domain.entity.dto.PessoaRequestDTO;
 import com.example.HabitaCode.domain.repositories.CidadeRepository;
 import com.example.HabitaCode.domain.repositories.CondominioRepository;
 import com.example.HabitaCode.domain.repositories.PessoaRepository;
+import com.example.HabitaCode.domain.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,21 +23,22 @@ public class PessoaService {
     private final PessoaRepository repository;
     private final CondominioRepository condominioRepository;
     private final CidadeRepository cidadeRepository;
-
+    private final UsuarioRepository usuarioRepository;
 
     public List<PessoaDTO> getAll () {
         return repository.findAll().stream().map(p -> {
-            var cond = p.getCondominio();
+            var cond = p.getCondominioId();
             var cid = cond.getCidade();
             var est = cid.getEstado();
 
             return new PessoaDTO(
-                    p.getId(),
+                    p.getPessoaId(),
                     p.getNomeCompleto(),
                     p.getCpf(),
                     cond.getNome(),
                     cid.getNome(),
-                    est.getNome()
+                    est.getNome(),
+                    p.getUsuarioId().getId()
             );
         }).toList();
     }
@@ -44,7 +47,8 @@ public class PessoaService {
     public Pessoa save(PessoaRequestDTO dto){
         Condominio condominio = condominioWriter(dto);
         Pessoa pessoa = pessoaWriter(dto);
-        pessoa.setCondominio(condominio);
+        pessoa.setCondominioId(condominio);
+        pessoa.setUsuarioId(usuarioWriter(dto));
         return repository.save(pessoa);
     }
 
@@ -55,6 +59,10 @@ public class PessoaService {
         condominio.setCidade(findItem);
 
         return condominioRepository.save(condominio);
+    }
+
+    private Usuario usuarioWriter (PessoaRequestDTO dto) {
+        return usuarioRepository.findById(dto.getUserId()).orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
     }
 
     private Pessoa pessoaWriter (PessoaRequestDTO dto) {
