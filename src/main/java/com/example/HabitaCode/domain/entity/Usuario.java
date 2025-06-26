@@ -1,6 +1,7 @@
 package com.example.HabitaCode.domain.entity;
 
 import com.example.HabitaCode.core.Constants;
+import com.example.HabitaCode.domain.enums.StatusUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,16 @@ public class Usuario {
 
     @Column(length = 20)
     private String role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusUsuario status = StatusUsuario.PENDENTE;
+
+    @Column(length = 100, unique = true)
+    private String tokenVerificacaoEmail;
+
+    @Column(nullable = false)
+    private boolean emailVerificado = false;
 
     @PrePersist
     public void gerarId() {
